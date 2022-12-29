@@ -24,7 +24,6 @@ def transform(df_bets, df_events):
 
     # Минимальная сумма ставки для участия в Бонусном предложении составляет 10 BYN с коэффициентом не менее 1,5,
     # в экспрессе все события на киберспорт с кф каждого события от 1.50
-    df = df[df.settlement_time <= '2022-03-15 12:00']
     df = df[df.amount >= 10]
     df = df[df.accepted_bet_odd >= 1.5]
 
@@ -36,7 +35,7 @@ def transform(df_bets, df_events):
     df = pd.concat([df_exp, df_oth])
 
     # Ставка должна быть рассчитана не позднее 12:00 15.03.2022.
-    df = df[df.settlement_time <= '2022-03-15 12:00']
+    df = df[df.settlement_time <= '2022-03-15 12:00:00']
 
     # Ставки вида «система» не учитываются.
     df = df[df.bet_type != 'System']
