@@ -27,8 +27,10 @@ def transform(df_bets, df_events):
     df = df[df.amount >= 10]
     df = df[df.accepted_bet_odd >= 1.5]
 
-    df_exp = df[df.bet_type == 'Express']
-    df_exp = df_exp[df_exp.accepted_odd >= 1.5]
+    df_exp_group = df.loc[df[df.bet_type == 'Express'].groupby('event_id').accepted_odd.idxmin()]
+    df_exp_group = df_exp_group[df_exp_group.accepted_odd >= 1.5]
+
+    df_exp = df[df.event_id.isin(df_exp_group.event_id)]
 
     df_oth = df[df.bet_type != 'Express']
 
